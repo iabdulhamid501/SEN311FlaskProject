@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>LOFT CITY | Responsive Travel & Tourism Template</title>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <meta content="" name="keywords">
+        <meta content="" name="description">
+
+        <!-- Favicons -->
+        <link href="{{ url_for('static', filename='img/favicon.ico') }}" rel="icon">
+        <link href="{{ url_for('static', filename='img/apple-favicon.png') }}" rel="apple-touch-icon">
+
+        <!-- Google Fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,700|Raleway:100,200,300,400,500,600,700,800,900" rel="stylesheet"> 
+
+        <!-- Vendor CSS File -->
+        <link href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+        <link href="{{ url_for('static', filename='vendor/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
+        <link href="{{ url_for('static', filename='vendor/slick/slick.css') }}" rel="stylesheet">
+        <link href="{{ url_for('static', filename='vendor/slick/slick-theme.css') }}" rel="stylesheet">
+        <link href="{{ url_for('static', filename='vendor/tempusdominus/css/tempusdominus-bootstrap-4.min.css') }}" rel="stylesheet" />
+
+        <!-- Main Stylesheet File -->
+        <link href="{{ url_for('static', filename='css/hover-style.css') }}" rel="stylesheet">
+        <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+        
+        <style>
+            /* Login/Profile status styles */
+            .user-welcome {
+                display: inline-block;
+                background: #00CED1;
+                color: #222;
+                padding: 0 15px;
+                border-radius: 30px;
+                font-size: 14px;
+                font-weight: 600;
+                line-height: 35px;
+                margin-right: 10px;
+            }
+            .user-welcome i {
+                margin-right: 5px;
+            }
+        </style>
+    </head>
+
+    <body>
+        <!-- Header Section Start -->
+        <header id="header">
+            <a href="{{ url_for('index') }}" class="logo"><img src="{{ url_for('static', filename='img/logo.png') }}" alt="logo"></a>
+            <div class="phone"><i class="fa fa-phone"></i>+234 906 482 3328</div>
+            <div class="mobile-menu-btn"><i class="fa fa-bars"></i></div>
+            <nav class="main-menu top-menu">
+                <ul>
+                    <li class="active"><a href="{{ url_for('index') }}">Home</a></li>
+                    
+                    {% if logged_in and user %}
+                        <!-- Logged In Navigation -->
+                        <li>
+                            <span class="user-welcome">
+                                <i class="fa fa-user-circle"></i> Welcome, {{ user.first_name }}
+                            </span>
+                        </li>
+                        <li><a href="{{ url_for('profile') }}"><i class="fa fa-user"></i> Profile</a></li>
+                        <li><a href="{{ url_for('logout') }}"><i class="fa fa-sign-out"></i> Logout</a></li>
+                    {% else %}
+                        <!-- Logged Out Navigation -->
+                        <li><a href="{{ url_for('signup') }}"><i class="fa fa-user-plus"></i> Sign Up</a></li>
+                        <li><a href="{{ url_for('login') }}"><i class="fa fa-sign-in"></i> Login</a></li>
+                    {% endif %}
+                    
+                    <li><a href="{{ url_for('about') }}">About Us</a></li>
+                    <li><a href="{{ url_for('contact') }}">Contact Us</a></li>
+                </ul>
+            </nav>
+        </header>
+        <!-- Header Section End -->
+        
+        <!-- Header Bottom Start -->
+        <div id="header-bottom">
+            <!-- Search Section Start -->
+            <div id="search" class="search-slider">
+                <div class="container">
+                    <h1>Feel at Home When You're Away</h1>
+                    <div class="form-row">
+                        <div class="control-group col-md-3">
+                            <label>Check-In</label>
+                            <div class="form-group">
+                                <div class="input-group date" id="date-3" data-target-input="nearest">
+                                    <input type="text" class="form-control datetimepicker-input" data-target="#date-3"/>
+                                    <div class="input-group-append" data-target="#date-3" data-toggle="datetimepicker">
+                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group col-md-3">
+                            <label>Check-Out</label>
+                            <div class="form-group">
+                                <div class="input-group date" id="date-4" data-target-input="nearest">
+                                    <input type="text" class="form-control datetimepicker-input" data-target="#date-4"/>
+                                    <div class="input-group-append" data-target="#date-4" data-toggle="datetimepicker">
+                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group col-md-3">
+                            <div class="form-row">
+                                <div class="control-group col-md-6">
+                                    <label>Adult</label>
+                                    <select class="custom-select">
+                                        <option selected>0</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                        <option value="10">10</option>
+                                    </select>
+                                </div>
+                                <div class="control-group col-md-6 control-group-kid">
+                                    <label>Kid</label>
+                                    <select class="custom-select">
+                                        <option selected>0</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                        <option value="10">10</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group col-md-3">
+                            <button class="btn btn-block">Search</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Search Section End -->
+            
+            <!-- Slider Section Start -->
+            <div id="headerSlider" class="carousel slide" data-ride="carousel">
+                <ol class="carousel-indicators">
+                    <li data-target="#headerSlider" data-slide-to="0" class="active"></li>
+                    <li data-target="#headerSlider" data-slide-to="1"></li>
+                    <li data-target="#headerSlider" data-slide-to="2"></li>
+                </ol>
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="{{ url_for('static', filename='img/slider/header-slider-1.jpg') }}" alt="Royal Hotel">
+                    </div>
+
+                    <div class="carousel-item">
+                        <img src="{{ url_for('static', filename='img/slider/header-slider-2.jpg') }}" alt="Royal Hotel">
+                    </div>
+
+                    <div class="carousel-item">
+                        <img src="{{ url_for('static', filename='img/slider/header-slider-3.jpg') }}" alt="Royal Hotel">
+                    </div>
+                </div>
+
+                <a class="carousel-control-prev" href="#headerSlider" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#headerSlider" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+            <!-- Slider Section End -->
+        </div>
+        <!-- Header Bottom End -->
+        
+        <!-- Search Section Start -->
+        <div id="search" class="search-home">
+            <div class="container">
+                <div class="form-row">
+                    <div class="control-group col-md-3">
+                        <label>Check-In</label>
+                        <div class="form-group">
+                            <div class="input-group date" id="date-5" data-target-input="nearest">
+                                <input type="text" class="form-control datetimepicker-input" data-target="#date-5"/>
+                                <div class="input-group-append" data-target="#date-5" data-toggle="datetimepicker">
+                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="control-group col-md-3">
+                        <label>Check-Out</label>
+                        <div class="form-group">
+                            <div class="input-group date" id="date-6" data-target-input="nearest">
+                                <input type="text" class="form-control datetimepicker-input" data-target="#date-6"/>
+                                <div class="input-group-append" data-target="#date-6" data-toggle="datetimepicker">
+                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="control-group col-md-3">
+                        <div class="form-row">
+                            <div class="control-group col-md-6">
+                                <label>Adult</label>
+                                <select class="custom-select">
+                                    <option selected>0</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                </select>
+                            </div>
+                            <div class="control-group col-md-6 control-group-kid">
+                                <label>Kid</label>
+                                <select class="custom-select">
+                                    <option selected>0</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="control-group col-md-3">
+                        <button class="btn btn-block">Search</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Search Section End -->
+        
+        <!-- Welcome Section Start -->
+        <div id="welcome">
+            <div class="container">
+                <h3>Welcome to Loft City</h3>
+                <h4>Urban Holiday Apartments in San Francisco</h4> 
+                <p>From the moment you arrive, you'll feel right at home. Our apartments are designed with your comfort in mind, featuring cozy interiors, fast Wi-Fi, and a prime location that puts the city's best restaurants, shops, and sights right at your doorstep.</p>
+                <a href="#">Book Now</a>
+            </div>
+        </div>
+        <!-- Welcome Section End -->
+        
+        <!-- Amenities Section Start -->
+        <div id="amenities">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Amenities & Services</h2>
+                    <p>
+                        Discover the comforts and conveniences that make your stay with us truly memorable. We offer a range of amenities designed to enhance your experience.
+                    </p>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 col-sm-6">
+                        <div class="item">
+                            <i class="icon icon-2"></i>
+                            <h3>Air Conditioner</h3>
+                            <p>Stay cool and comfortable with our modern air conditioning units, ensuring a pleasant stay throughout your visit.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="item">
+                            <i class="icon icon-3"></i>
+                            <h3>Bathtub</h3>
+                            <p>Relax and unwind in our spacious bathtubs, perfect for a soothing soak after a long day of exploring.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="item">
+                            <i class="icon icon-4"></i>
+                            <h3>Shower</h3>
+                            <p>Enjoy a revitalizing shower experience with excellent water flow and adjustable temperature settings.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="item">
+                            <i class="icon icon-6"></i>
+                            <h3>Television</h3>
+                            <p>Stay entertained with our high-definition televisions, offering a wide range of channels and streaming options.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="item">
+                            <i class="icon icon-7"></i>
+                            <h3>WiFi</h3>
+                            <p>Stay connected with our high-speed WiFi, perfect for work or leisure.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="item">
+                            <i class="icon icon-8"></i>
+                            <h3>Telephone</h3>
+                            <p>Make reservations, request assistance, or connect with loved ones using our user-friendly room phone system.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="item">
+                            <i class="icon icon-9"></i>
+                            <h3>Mini Bar</h3>
+                            <p>Featuring an array of local and international favorites, our mini bar offers the perfect complement to your in-room experience.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="item">
+                            <i class="icon icon-10"></i>
+                            <h3>Kitchen</h3>
+                            <p>A fully functional kitchen with cookware, utensils, and appliances perfect for short stays or extended visits.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Amenities Section Start -->
+        
+        <!-- Room Section Start -->
+        <div id="rooms">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Apartments & Suites</h2>
+                    <p>
+                        Find the perfect space for your needs. Browse available rooms, check real-time availability, and secure your booking in just a few clicks.
+                    </p>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 room">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="room-img">
+                                    <img src="{{ url_for('static', filename='img/room/room-1.jpg') }}">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="room-des">
+                                    <h3>Standard Single</h3>
+                                    <h1>N150,000<span>/ Night</span></h1>
+                                    <ul class="room-size">
+                                        <li><i class="fa fa-arrow-right"></i>Size: 260 sq ft </li>
+                                        <li><i class="fa fa-arrow-right"></i>Beds: 2 Single(s) </li>
+                                    </ul>
+                                    <ul class="room-icon">
+                                        <li class="icon-1"></li>
+                                        <li class="icon-2"></li>
+                                        <li class="icon-3"></li>
+                                        <li class="icon-4"></li>
+                                        <li class="icon-5"></li>
+                                        <li class="icon-6"></li>
+                                        <li class="icon-7"></li>
+                                        <li class="icon-8"></li>
+                                        <li class="icon-9"></li>
+                                        <li class="icon-10"></li>
+                                    </ul>
+                                    <div class="room-link">
+                                        <a href="#" data-toggle="modal" data-target="#modal-id">Read More</a>
+                                        <a href="#" {% if logged_in %}data-toggle="modal" data-target="#bookingModal"{% else %}data-toggle="modal" data-target="#loginRequiredModal"{% endif %}>Book Now</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-12 room">
+                        <div class="row">
+                            <div class="col-md-6 d-block d-md-none">
+                                <div class="room-img">
+                                    <img src="{{ url_for('static', filename='img/room/room-2.jpg') }}">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="room-des">
+                                    <h3>Standard Double</h3>
+                                    <h1>N220,000<span>/ Night</span></h1>
+                                    <ul class="room-size">
+                                        <li><i class="fa fa-arrow-right"></i>Size: 260 sq ft </li>
+                                        <li><i class="fa fa-arrow-right"></i>Beds: 2 Single(s) </li>
+                                    </ul>
+                                    <ul class="room-icon">
+                                        <li class="icon-1"></li>
+                                        <li class="icon-2"></li>
+                                        <li class="icon-3"></li>
+                                        <li class="icon-4"></li>
+                                        <li class="icon-5"></li>
+                                        <li class="icon-6"></li>
+                                        <li class="icon-7"></li>
+                                        <li class="icon-8"></li>
+                                        <li class="icon-9"></li>
+                                        <li class="icon-10"></li>
+                                    </ul>
+                                    <div class="room-link">
+                                        <a href="#" data-toggle="modal" data-target="#modal-id">Read More</a>
+                                        <a href="#" {% if logged_in %}data-toggle="modal" data-target="#bookingModal"{% else %}data-toggle="modal" data-target="#loginRequiredModal"{% endif %}>Book Now</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 d-none d-md-block">
+                                <div class="room-img">
+                                    <img src="{{ url_for('static', filename='img/room/room-2.jpg') }}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-12 room">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="room-img">
+                                    <img src="{{ url_for('static', filename='img/room/room-3.jpg') }}">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="room-des">
+                                    <h3>Premium Single</h3>
+                                    <h1>N180,000<span>/ Night</span></h1>
+                                    <ul class="room-size">
+                                        <li><i class="fa fa-arrow-right"></i>Size: 260 sq ft </li>
+                                        <li><i class="fa fa-arrow-right"></i>Beds: 2 Single(s) </li>
+                                    </ul>
+                                    <ul class="room-icon">
+                                        <li class="icon-1"></li>
+                                        <li class="icon-2"></li>
+                                        <li class="icon-3"></li>
+                                        <li class="icon-4"></li>
+                                        <li class="icon-5"></li>
+                                        <li class="icon-6"></li>
+                                        <li class="icon-7"></li>
+                                        <li class="icon-8"></li>
+                                        <li class="icon-9"></li>
+                                        <li class="icon-10"></li>
+                                    </ul>
+                                    <div class="room-link">
+                                        <a href="#" data-toggle="modal" data-target="#modal-id">Read More</a>
+                                        <a href="#" {% if logged_in %}data-toggle="modal" data-target="#bookingModal"{% else %}data-toggle="modal" data-target="#loginRequiredModal"{% endif %}>Book Now</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-12 room">
+                        <div class="row">
+                            <div class="col-md-6 d-block d-md-none">
+                                <div class="room-img">
+                                    <img src="{{ url_for('static', filename='img/room/room-4.jpg') }}">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="room-des">
+                                    <h3>Premium Double</h3>
+                                    <h1>N300,000<span>/ Night</span></h1>
+                                    <ul class="room-size">
+                                        <li><i class="fa fa-arrow-right"></i>Size: 260 sq ft </li>
+                                        <li><i class="fa fa-arrow-right"></i>Beds: 2 Single(s) </li>
+                                    </ul>
+                                    <ul class="room-icon">
+                                        <li class="icon-1"></li>
+                                        <li class="icon-2"></li>
+                                        <li class="icon-3"></li>
+                                        <li class="icon-4"></li>
+                                        <li class="icon-5"></li>
+                                        <li class="icon-6"></li>
+                                        <li class="icon-7"></li>
+                                        <li class="icon-8"></li>
+                                        <li class="icon-9"></li>
+                                        <li class="icon-10"></li>
+                                    </ul>
+                                    <div class="room-link">
+                                        <a href="#" data-toggle="modal" data-target="#modal-id">Read More</a>
+                                        <a href="#" {% if logged_in %}data-toggle="modal" data-target="#bookingModal"{% else %}data-toggle="modal" data-target="#loginRequiredModal"{% endif %}>Book Now</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 d-none d-md-block">
+                                <div class="room-img">
+                                    <img src="{{ url_for('static', filename='img/room/room-4.jpg') }}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-12 room">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="room-img">
+                                    <img src="{{ url_for('static', filename='img/room/room-5.jpg') }}">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="room-des">
+                                    <h3>Economy Single</h3>
+                                    <h1>N120,000<span>/ Night</span></h1>
+                                    <ul class="room-size">
+                                        <li><i class="fa fa-arrow-right"></i>Size: 260 sq ft </li>
+                                        <li><i class="fa fa-arrow-right"></i>Beds: 2 Single(s) </li>
+                                    </ul>
+                                    <ul class="room-icon">
+                                        <li class="icon-1"></li>
+                                        <li class="icon-2"></li>
+                                        <li class="icon-3"></li>
+                                        <li class="icon-4"></li>
+                                        <li class="icon-5"></li>
+                                        <li class="icon-6"></li>
+                                        <li class="icon-7"></li>
+                                        <li class="icon-8"></li>
+                                        <li class="icon-9"></li>
+                                        <li class="icon-10"></li>
+                                    </ul>
+                                    <div class="room-link">
+                                        <a href="#" data-toggle="modal" data-target="#modal-id">Read More</a>
+                                        <a href="#" {% if logged_in %}data-toggle="modal" data-target="#bookingModal"{% else %}data-toggle="modal" data-target="#loginRequiredModal"{% endif %}>Book Now</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Room Section End -->
+        
+        <!-- Modal for Room Section Start -->
+        <div id="modal-id" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="port-slider">
+                                    <div><img src="{{ url_for('static', filename='img/room-slider/room-1.jpg') }}"></div>
+                                    <div><img src="{{ url_for('static', filename='img/room-slider/room-2.jpg') }}"></div>
+                                    <div><img src="{{ url_for('static', filename='img/room-slider/room-3.jpg') }}"></div>
+                                    <div><img src="{{ url_for('static', filename='img/room-slider/room-4.jpg') }}"></div>
+                                    <div><img src="{{ url_for('static', filename='img/room-slider/room-5.jpg') }}"></div>
+                                    <div><img src="{{ url_for('static', filename='img/room-slider/room-6.jpg') }}"></div>
+                                </div>
+                                <div class="port-slider-nav">
+                                    <div><img src="{{ url_for('static', filename='img/room-slider/room-1.jpg') }}"></div>
+                                    <div><img src="{{ url_for('static', filename='img/room-slider/room-2.jpg') }}"></div>
+                                    <div><img src="{{ url_for('static', filename='img/room-slider/room-3.jpg') }}"></div>
+                                    <div><img src="{{ url_for('static', filename='img/room-slider/room-4.jpg') }}"></div>
+                                    <div><img src="{{ url_for('static', filename='img/room-slider/room-5.jpg') }}"></div>
+                                    <div><img src="{{ url_for('static', filename='img/room-slider/room-6.jpg') }}"></div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <h2>Book With Ease</h2>
+                                <p>
+                                     Explore our wide selection of rooms designed to suit every need. From intimate spaces to larger venues, each option comes with premium comfort and dedicated support. Don't wait – your ideal room is just a click away.
+                                </p>
+                                <div class="modal-link">
+                                    <a href="#" {% if logged_in %}data-toggle="modal" data-target="#bookingModal"{% else %}data-toggle="modal" data-target="#loginRequiredModal"{% endif %}>Book Now</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal for Room Section End -->
+
+        <!-- Login Required Modal -->
+        <div id="loginRequiredModal" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title"><i class="fa fa-lock" style="color: #00CED1;"></i> Login Required</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body" style="text-align: center; padding: 30px;">
+                        <i class="fa fa-user-circle" style="font-size: 60px; color: #00CED1; margin-bottom: 20px;"></i>
+                        <h4>Please Login to Book</h4>
+                        <p style="color: #666; margin: 15px 0;">You need to be logged in to make a booking. Please login or create an account to continue.</p>
+                        <div style="margin-top: 25px;">
+                            <a href="{{ url_for('login') }}" class="btn btn-primary" style="border-radius: 30px; padding: 10px 30px; background: #222; color: #00CED1; border: none; margin-right: 10px;">
+                                <i class="fa fa-sign-in"></i> Login
+                            </a>
+                            <a href="{{ url_for('signup') }}" class="btn btn-primary" style="border-radius: 30px; padding: 10px 30px; background: #00CED1; color: #222; border: none;">
+                                <i class="fa fa-user-plus"></i> Sign Up
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Booking Modal (for logged in users) -->
+        <div id="bookingModal" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title"><i class="fa fa-calendar-check-o" style="color: #00CED1;"></i> Book Your Stay</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div style="background: #f8f9fa; padding: 20px; border-radius: 15px; margin-bottom: 20px;">
+                            <h5><i class="fa fa-user" style="color: #00CED1;"></i> Welcome, {{ user.first_name if logged_in else 'Guest' }}!</h5>
+                            <p style="margin: 0;">You're about to book your stay with us. Please confirm your details below.</p>
+                        </div>
+                        <form id="bookingFormModal">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label><i class="fa fa-user"></i> First Name</label>
+                                        <input type="text" class="form-control" value="{{ user.first_name if logged_in else '' }}" readonly style="background: #f8f9fa;">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label><i class="fa fa-user"></i> Last Name</label>
+                                        <input type="text" class="form-control" value="{{ user.last_name if logged_in else '' }}" readonly style="background: #f8f9fa;">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label><i class="fa fa-envelope"></i> Email</label>
+                                        <input type="email" class="form-control" value="{{ user.email if logged_in else '' }}" readonly style="background: #f8f9fa;">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label><i class="fa fa-phone"></i> Phone</label>
+                                        <input type="text" class="form-control" value="{{ user.phone if logged_in else '' }}" readonly style="background: #f8f9fa;">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label><i class="fa fa-calendar"></i> Check-In</label>
+                                        <input type="date" class="form-control" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label><i class="fa fa-calendar"></i> Check-Out</label>
+                                        <input type="date" class="form-control" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label><i class="fa fa-users"></i> Adults</label>
+                                        <select class="form-control">
+                                            <option>1</option>
+                                            <option>2</option>
+                                            <option>3</option>
+                                            <option>4</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label><i class="fa fa-child"></i> Children</label>
+                                        <select class="form-control">
+                                            <option>0</option>
+                                            <option>1</option>
+                                            <option>2</option>
+                                            <option>3</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label><i class="fa fa-bed"></i> Room</label>
+                                        <select class="form-control">
+                                            <option>Standard Single</option>
+                                            <option>Standard Double</option>
+                                            <option>Premium Single</option>
+                                            <option>Premium Double</option>
+                                            <option>Economy Single</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label><i class="fa fa-comment"></i> Special Requests</label>
+                                <textarea class="form-control" rows="3" placeholder="Any special requests?"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary" style="border-radius: 30px; padding: 12px 40px; background: #222; color: #00CED1; border: none; width: 100%; font-size: 16px;">
+                                <i class="fa fa-check"></i> Confirm Booking
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Subscribe Section Start -->
+        <div id="subscribe">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Subscribe for Special Offer</h2>
+                    <p>
+                        Stay updated with our latest offers and promotions. Subscribe to our newsletter and never miss out on exclusive deals!
+                    </p>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="subscribe-form">
+                            <form>
+                                <input type="email" required="required" placeholder="Enter your email here" />
+                                <button>submit</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Subscribe Section End -->
+        
+        <!-- Booking Section Start -->
+        <div id="booking">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Room Booking</h2>
+                    <p>
+                        Find the perfect space for your needs. Browse available rooms, check real-time availability, and secure your booking in just a few clicks.
+                    </p>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="booking-form">
+                            <div id="success"></div>
+                            <form name="sentMessage" id="bookingForm" novalidate="novalidate">
+                                <div class="form-row">
+                                    <div class="control-group col-sm-6">
+                                        <label>First Name</label>
+                                        <input type="text" class="form-control" id="First name" placeholder="E.g. Abdulhamid" required="required" data-validation-required-message="Please enter first name" />
+                                        <p class="help-block text-danger"></p>
+                                    </div>
+                                    <div class="control-group col-sm-6">
+                                        <label>Last Name</label>
+                                        <input type="text" class="form-control" id="Last name" placeholder="E.g. Ibrahim" required="required" data-validation-required-message="Please enter last name" />
+                                        <p class="help-block text-danger"></p>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="control-group col-sm-6">
+                                        <label>Mobile</label>
+                                        <input type="text" class="form-control" id="mobile" placeholder="E.g. +234 906 482 3328" required="required" data-validation-required-message="Please enter your mobile number" />
+                                        <p class="help-block text-danger"></p>
+                                    </div>
+                                    <div class="control-group col-sm-6">
+                                        <label>Email</label>
+                                        <input type="email" class="form-control" id="email" placeholder="E.g. email@example.com" required="required" data-validation-required-message="Please enter your email" />
+                                        <p class="help-block text-danger"></p>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="control-group col-sm-6">
+                                        <label>Check-In</label>
+                                        <input type="text" class="form-control datetimepicker-input" id="date-1" data-toggle="datetimepicker" data-target="#date-1" placeholder="E.g. MM/DD/YYYY" required="required" data-validation-required-message="Please enter date"/>
+                                        <p class="help-block text-danger"></p>
+                                    </div>
+                                    <div class="control-group col-sm-6">
+                                        <label>Check-Out</label>
+                                        <input type="text" class="form-control datetimepicker-input" id="date-2" data-toggle="datetimepicker" data-target="#date-2" placeholder="E.g. MM/DD/YYYY" required="required" data-validation-required-message="Please enter date"/>
+                                        <p class="help-block text-danger"></p>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="control-group col-sm-6">
+                                        <label>Adult</label>
+                                        <select class="custom-select" id="adult" required="required" data-validation-required-message="Please select one"/>
+                                            <option value="0">0</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                        </select>
+                                        <p class="help-block text-danger"></p>
+                                    </div>
+                                    <div class="control-group col-sm-6">
+                                        <label>KId</label>
+                                        <select class="custom-select" id="kid" required="required" data-validation-required-message="Please select one"/>
+                                            <option value="0">0</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                        </select>
+                                        <p class="help-block text-danger"></p>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label>Special Request</label>
+                                    <input type="text" class="form-control" id="request" placeholder="E.g. Special Request" required="required" data-validation-required-message="Please enter your special request" />
+                                    <p class="help-block text-danger"></p>
+                                </div>
+                                <div class="button">
+                                    <button type="submit" id="bookingButton">
+                                        <i class="fa fa-check-circle"></i> Book Now
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Booking Section End -->
+        
+        <!-- Call Section Start -->
+        <div id="call-us">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Click Below to Call Us</h2>
+                    <p>
+                         Have a question? Need immediate assistance? Click the button below to speak directly with one of our support specialists today.
+                    </p>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <a href="tel:+2349064823328">+234 906 482 3328</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Call Section End -->
+        
+        <!-- Footer Section Start -->
+        <div id="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="social">
+                            <a href=""><li class="fa fa-instagram"></li></a>
+                            <a href=""><li class="fa fa-twitter"></li></a>
+                            <a href=""><li class="fa fa-facebook-f"></li></a>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <ul>
+                            <li><a href="{{ url_for('index') }}">Home</a></li>
+                            <li><a href="{{ url_for('about') }}">About</a></li>
+                            <li><a href="#">Terms</a></li>
+                            <li><a href="{{ url_for('contact') }}">Contact</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-12">
+                        <p>Copyright &#169; <a href="https://abdulhamidibrahim.great-site.net">View My Blog</a> All Rights Reserved.</p>
+						<p>Project Designed By <a href="https://abdulhamidibrahim.great-site.net">Abdulhamid Ibrahim</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer Section End -->
+        
+        <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+        
+        <!-- Vendor JavaScript File -->
+        <script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='vendor/jquery/jquery-migrate.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='vendor/easing/easing.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='vendor/stickyjs/sticky.js') }}"></script>
+        <script src="{{ url_for('static', filename='vendor/superfish/hoverIntent.js') }}"></script>
+        <script src="{{ url_for('static', filename='vendor/superfish/superfish.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='vendor/wow/wow.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='vendor/slick/slick.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='vendor/tempusdominus/js/moment.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='vendor/tempusdominus/js/moment-timezone.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='vendor/tempusdominus/js/tempusdominus-bootstrap-4.min.js') }}"></script>
+        
+        <!-- Booking Javascript File -->
+        <script src="{{ url_for('static', filename='js/booking.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/jqBootstrapValidation.min.js') }}"></script>
+  
+        <!-- Main Javascript File -->
+        <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+        
+        <script>
+            $(document).ready(function() {
+                // Mobile menu toggle
+                $('.mobile-menu-btn').on('click', function() {
+                    $('.main-menu').slideToggle();
+                });
+                
+                // Auto dismiss flash messages
+                setTimeout(function() {
+                    $('.alert').fadeOut('slow');
+                }, 5000);
+            });
+        </script>
+    </body>
+</html>

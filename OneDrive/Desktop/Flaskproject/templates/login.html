@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Login | LOFT CITY</title>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <meta content="" name="keywords">
+        <meta content="" name="description">
+
+        <!-- Favicons -->
+        <link href="{{ url_for('static', filename='img/favicon.ico') }}" rel="icon">
+        <link href="{{ url_for('static', filename='img/apple-favicon.png') }}" rel="apple-touch-icon">
+
+        <!-- Google Fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,700|Raleway:100,200,300,400,500,600,700,800,900" rel="stylesheet"> 
+
+        <!-- Vendor CSS File -->
+        <link href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+        <link href="{{ url_for('static', filename='vendor/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
+        <link href="{{ url_for('static', filename='vendor/slick/slick.css') }}" rel="stylesheet">
+        <link href="{{ url_for('static', filename='vendor/slick/slick-theme.css') }}" rel="stylesheet">
+        <link href="{{ url_for('static', filename='vendor/tempusdominus/css/tempusdominus-bootstrap-4.min.css') }}" rel="stylesheet" />
+
+        <!-- Main Stylesheet File -->
+        <link href="{{ url_for('static', filename='css/hover-style.css') }}" rel="stylesheet">
+        <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+        
+        <style>
+            /* Login Page Styles */
+            #login {
+                padding: 60px 0 80px 0;
+                background: #f2f2f2;
+                min-height: calc(100vh - 200px);
+            }
+            
+            #login .container {
+                max-width: 500px;
+            }
+            
+            #login .login-box {
+                background: #ffffff;
+                padding: 50px 40px;
+                border-radius: 30px;
+                box-shadow: 0 5px 30px rgba(0,0,0,0.1);
+            }
+            
+            #login .login-box .login-header {
+                text-align: center;
+                margin-bottom: 30px;
+            }
+            
+            #login .login-box .login-header h2 {
+                font-family: 'Roboto Slab', serif;
+                font-size: 32px;
+                font-weight: 700;
+                color: #222;
+                margin-bottom: 5px;
+            }
+            
+            #login .login-box .login-header p {
+                color: #666;
+                font-size: 16px;
+                margin: 0;
+            }
+            
+            #login .login-box .login-header .logo-icon {
+                font-size: 60px;
+                color: #00CED1;
+                margin-bottom: 15px;
+            }
+            
+            #login .form-group {
+                margin-bottom: 25px;
+            }
+            
+            #login label {
+                font-size: 14px;
+                font-weight: 600;
+                color: #222;
+                margin-bottom: 8px;
+                display: block;
+            }
+            
+            #login .form-control {
+                height: 50px;
+                border: 1px solid #ddd;
+                border-radius: 30px;
+                padding: 5px 25px;
+                font-size: 15px;
+                transition: all 0.3s ease;
+                background: #f8f9fa;
+            }
+            
+            #login .form-control:focus {
+                border-color: #00CED1;
+                box-shadow: 0 0 0 3px rgba(0, 206, 209, 0.1);
+                background: #ffffff;
+            }
+            
+            #login .form-control.is-invalid {
+                border-color: #dc3545;
+                box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.1);
+            }
+            
+            #login .btn-login {
+                display: block;
+                width: 100%;
+                padding: 14px;
+                background: #222222;
+                color: #00CED1;
+                font-size: 18px;
+                font-weight: 700;
+                border: none;
+                border-radius: 30px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                margin-top: 10px;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+            }
+            
+            #login .btn-login:hover {
+                background: #00CED1;
+                color: #222222;
+                transform: translateY(-2px);
+                box-shadow: 0 5px 15px rgba(0, 206, 209, 0.3);
+            }
+            
+            #login .btn-login:active {
+                transform: translateY(0);
+            }
+            
+            #login .btn-login i {
+                margin-right: 10px;
+            }
+            
+            #login .login-footer {
+                text-align: center;
+                margin-top: 25px;
+                padding-top: 25px;
+                border-top: 1px solid #eee;
+            }
+            
+            #login .login-footer p {
+                color: #666;
+                font-size: 15px;
+            }
+            
+            #login .login-footer a {
+                color: #00CED1;
+                font-weight: 600;
+                transition: all 0.3s ease;
+                text-decoration: none;
+            }
+            
+            #login .login-footer a:hover {
+                color: #222;
+                text-decoration: none;
+            }
+            
+            #login .login-footer .forgot-password {
+                display: block;
+                margin-top: 10px;
+                font-size: 14px;
+                color: #999;
+            }
+            
+            #login .login-footer .forgot-password:hover {
+                color: #00CED1;
+            }
+            
+            .alert {
+                border-radius: 30px;
+                padding: 12px 20px;
+                margin-bottom: 20px;
+                border: none;
+            }
+            
+            .alert-success {
+                background: #d4edda;
+                color: #155724;
+            }
+            
+            .alert-danger {
+                background: #f8d7da;
+                color: #721c24;
+            }
+            
+            .alert-info {
+                background: #d1ecf1;
+                color: #0c5460;
+            }
+            
+            .alert i {
+                margin-right: 10px;
+            }
+            
+            .alert .close {
+                color: inherit;
+                opacity: 0.8;
+            }
+            
+            .alert .close:hover {
+                opacity: 1;
+            }
+            
+            .input-icon-wrapper {
+                position: relative;
+            }
+            
+            .input-icon-wrapper .input-icon {
+                position: absolute;
+                left: 20px;
+                top: 50%;
+                transform: translateY(-50%);
+                color: #999;
+                font-size: 16px;
+            }
+            
+            .input-icon-wrapper .form-control {
+                padding-left: 50px;
+            }
+            
+            .password-toggle {
+                position: absolute;
+                right: 20px;
+                top: 50%;
+                transform: translateY(-50%);
+                color: #999;
+                cursor: pointer;
+                font-size: 16px;
+                transition: all 0.3s ease;
+                background: none;
+                border: none;
+                padding: 0;
+            }
+            
+            .password-toggle:hover {
+                color: #00CED1;
+            }
+            
+            .remember-me {
+                display: flex;
+                align-items: center;
+                margin-bottom: 20px;
+            }
+            
+            .remember-me input[type="checkbox"] {
+                width: 18px;
+                height: 18px;
+                margin-right: 10px;
+                accent-color: #00CED1;
+                cursor: pointer;
+            }
+            
+            .remember-me label {
+                margin: 0;
+                cursor: pointer;
+                font-weight: 400;
+                font-size: 14px;
+                color: #666;
+            }
+            
+            /* Responsive */
+            @media (max-width: 767.98px) {
+                #login .login-box {
+                    padding: 30px 25px;
+                }
+                
+                #login .login-box .login-header h2 {
+                    font-size: 26px;
+                }
+                
+                #login .btn-login {
+                    font-size: 16px;
+                    padding: 12px;
+                }
+            }
+            
+            @media (max-width: 575.98px) {
+                #login .login-box {
+                    padding: 25px 20px;
+                    margin: 0 10px;
+                }
+                
+                #login .login-box .login-header h2 {
+                    font-size: 22px;
+                }
+                
+                #login .form-control {
+                    height: 45px;
+                    font-size: 14px;
+                }
+            }
+        </style>
+    </head>
+
+    <body>
+        <!-- Header Section Start -->
+        <header id="header">
+            <a href="{{ url_for('index') }}" class="logo"><img src="{{ url_for('static', filename='img/logo.png') }}" alt="logo"></a>
+            <div class="phone"><i class="fa fa-phone"></i>+234 906 482 3328</div>
+            <div class="mobile-menu-btn"><i class="fa fa-bars"></i></div>
+            <nav class="main-menu top-menu">
+                <ul>
+                    <li><a href="{{ url_for('index') }}">Home</a></li>
+                    <li><a href="{{ url_for('signup') }}">Sign Up</a></li>
+                    <li><a href="{{ url_for('about') }}">About Us</a></li>
+                    <li class="active"><a href="{{ url_for('login') }}">Login</a></li>
+                    <li><a href="{{ url_for('contact') }}">Contact Us</a></li>
+                </ul>
+            </nav>
+        </header>
+        <!-- Header Section End -->
+
+        <!-- Login Section Start -->
+        <div id="login">
+            <div class="container">
+                <div class="login-box">
+                    <!-- Login Header -->
+                    <div class="login-header">
+                        <div class="logo-icon">
+                            <i class="fa fa-key"></i>
+                        </div>
+                        <h2>Welcome Back!</h2>
+                        <p>Login to your account to continue</p>
+                    </div>
+                    
+                    <!-- Flash Messages -->
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                            {% for category, message in messages %}
+                                <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                                    <i class="fa fa-{% if category == 'success' %}check-circle{% elif category == 'info' %}info-circle{% else %}exclamation-circle{% endif %}"></i>
+                                    {{ message }}
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+                    
+                    <!-- Login Form -->
+                    <form method="POST" action="{{ url_for('login') }}" id="loginForm" novalidate>
+                        <!-- Username Field -->
+                        <div class="form-group">
+                            <label for="username"><i class="fa fa-user" style="color: #00CED1; margin-right: 5px;"></i> Username</label>
+                            <div class="input-icon-wrapper">
+                                <span class="input-icon"></i></span>
+                                <input type="text" class="form-control" id="username" name="username" 
+                                       placeholder="Enter your username" 
+                                       value="{{ request.form.username if request.form.username else '' }}"
+                                       required autofocus>
+                            </div>
+                        </div>
+                        
+                        <!-- Password Field -->
+                        <div class="form-group">
+                            <label for="password"><i class="fa fa-lock" style="color: #00CED1; margin-right: 5px;"></i> Password</label>
+                            <div class="input-icon-wrapper">
+                                <span class="input-icon"></span>
+                                <input type="password" class="form-control" id="password" name="password" 
+                                       placeholder="Enter your password" required>
+                                <button type="button" class="password-toggle" id="togglePassword" tabindex="-1">
+                                    <i class="fa fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Remember Me -->
+                        <div class="remember-me">
+                            <input type="checkbox" id="remember" name="remember">
+                            <label for="remember">Remember me</label>
+                        </div>
+                        
+                        <!-- Login Button -->
+                        <button type="submit" class="btn-login">
+                            <i class="fa fa-sign-in"></i> Login
+                        </button>
+                    </form>
+                    
+                    <!-- Login Footer -->
+                    <div class="login-footer">
+                        <p>Don't have an account? <a href="{{ url_for('signup') }}">Sign Up Now</a></p>
+                        <a href="#" class="forgot-password"><i class="fa fa-question-circle"></i> Forgot Password?</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Login Section End -->
+
+        <!-- Footer Section Start -->
+        <div id="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="social">
+                            <a href=""><li class="fa fa-instagram"></li></a>
+                            <a href=""><li class="fa fa-twitter"></li></a>
+                            <a href=""><li class="fa fa-facebook-f"></li></a>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <ul>
+                            <li><a href="{{ url_for('index') }}">Home</a></li>
+                            <li><a href="{{ url_for('about') }}">About</a></li>
+                            <li><a href="#">Terms</a></li>
+                            <li><a href="{{ url_for('contact') }}">Contact</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-12">
+                        <p>Copyright &#169; <a href="">View My Blog</a> All Rights Reserved.</p>
+                        <p>Project Designed By <a href="">Abdulhamid Ibrahim</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer Section End -->
+        
+        <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+
+        <!-- Vendor JavaScript -->
+        <script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='vendor/easing/easing.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='vendor/stickyjs/sticky.js') }}"></script>
+        <script src="{{ url_for('static', filename='vendor/superfish/hoverIntent.js') }}"></script>
+        <script src="{{ url_for('static', filename='vendor/superfish/superfish.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='vendor/wow/wow.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='vendor/slick/slick.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+        
+        <script>
+            $(document).ready(function() {
+                // Mobile menu toggle
+                $('.mobile-menu-btn').on('click', function() {
+                    $('.main-menu').slideToggle();
+                });
+                
+                // Toggle password visibility
+                $('#togglePassword').on('click', function() {
+                    var passwordField = $('#password');
+                    var icon = $(this).find('i');
+                    
+                    if (passwordField.attr('type') === 'password') {
+                        passwordField.attr('type', 'text');
+                        icon.removeClass('fa-eye').addClass('fa-eye-slash');
+                    } else {
+                        passwordField.attr('type', 'password');
+                        icon.removeClass('fa-eye-slash').addClass('fa-eye');
+                    }
+                });
+                
+                // Form validation
+                $('#loginForm').on('submit', function(e) {
+                    var username = $('#username').val().trim();
+                    var password = $('#password').val().trim();
+                    var isValid = true;
+                    
+                    // Clear previous errors
+                    $('.form-control').removeClass('is-invalid');
+                    $('.invalid-feedback').remove();
+                    
+                    // Validate username
+                    if (!username) {
+                        $('#username').addClass('is-invalid');
+                        $('#username').after('<div class="invalid-feedback">Username is required</div>');
+                        isValid = false;
+                    }
+                    
+                    // Validate password
+                    if (!password) {
+                        $('#password').addClass('is-invalid');
+                        $('#password').after('<div class="invalid-feedback">Password is required</div>');
+                        isValid = false;
+                    }
+                    
+                    if (!isValid) {
+                        e.preventDefault();
+                        // Scroll to first error
+                        $('.is-invalid:first').focus();
+                        return false;
+                    }
+                });
+                
+                // Auto dismiss alerts after 5 seconds
+                setTimeout(function() {
+                    $('.alert').fadeOut('slow');
+                }, 5000);
+            });
+        </script>
+    </body>
+</html>

@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>My Profile | LOFT CITY</title>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        
+        <!-- Favicons -->
+        <link href="{{ url_for('static', filename='img/favicon.ico') }}" rel="icon">
+        <link href="{{ url_for('static', filename='img/apple-favicon.png') }}" rel="apple-touch-icon">
+        
+        <!-- Google Fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,700|Raleway:100,200,300,400,500,600,700,800,900" rel="stylesheet"> 
+        
+        <!-- Vendor CSS File -->
+        <link href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+        <link href="{{ url_for('static', filename='vendor/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
+        <link href="{{ url_for('static', filename='vendor/slick/slick.css') }}" rel="stylesheet">
+        <link href="{{ url_for('static', filename='vendor/slick/slick-theme.css') }}" rel="stylesheet">
+        
+        <!-- Main Stylesheet File -->
+        <link href="{{ url_for('static', filename='css/hover-style.css') }}" rel="stylesheet">
+        <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+        
+        <style>
+            #profile {
+                padding: 60px 0 80px 0;
+                background: #f2f2f2;
+                min-height: calc(100vh - 200px);
+            }
+            
+            #profile .profile-box {
+                background: #ffffff;
+                padding: 40px 50px;
+                border-radius: 30px;
+                box-shadow: 0 5px 30px rgba(0,0,0,0.1);
+            }
+            
+            #profile .profile-header {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-bottom: 30px;
+                padding-bottom: 20px;
+                border-bottom: 2px solid #f0f0f0;
+            }
+            
+            #profile .profile-header h2 {
+                font-family: 'Roboto Slab', serif;
+                font-size: 32px;
+                font-weight: 700;
+                color: #222;
+                margin: 0;
+            }
+            
+            #profile .profile-header .user-badge {
+                background: #00CED1;
+                color: #222;
+                padding: 8px 20px;
+                border-radius: 30px;
+                font-weight: 600;
+                font-size: 14px;
+            }
+            
+            #profile .profile-avatar {
+                text-align: center;
+                margin-bottom: 30px;
+            }
+            
+            #profile .profile-avatar .avatar-circle {
+                width: 100px;
+                height: 100px;
+                background: #00CED1;
+                border-radius: 50%;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 40px;
+                color: #222;
+                font-weight: 700;
+                text-transform: uppercase;
+            }
+            
+            #profile .form-group {
+                margin-bottom: 20px;
+            }
+            
+            #profile label {
+                font-size: 14px;
+                font-weight: 600;
+                color: #222;
+                margin-bottom: 5px;
+            }
+            
+            #profile .form-control {
+                height: 45px;
+                border: 1px solid #ddd;
+                border-radius: 30px;
+                padding: 5px 20px;
+                font-size: 14px;
+                transition: all 0.3s ease;
+            }
+            
+            #profile .form-control:focus {
+                border-color: #00CED1;
+                box-shadow: 0 0 0 3px rgba(0, 206, 209, 0.1);
+            }
+            
+            #profile .form-control[disabled] {
+                background: #f8f9fa;
+                cursor: not-allowed;
+            }
+            
+            #profile .btn-update {
+                display: inline-block;
+                padding: 12px 40px;
+                background: #222222;
+                color: #00CED1;
+                font-size: 16px;
+                font-weight: 600;
+                border: none;
+                border-radius: 30px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+            }
+            
+            #profile .btn-update:hover {
+                background: #00CED1;
+                color: #222222;
+            }
+            
+            #profile .btn-danger {
+                background: #dc3545;
+                color: white;
+            }
+            
+            #profile .btn-danger:hover {
+                background: #c82333;
+                color: white;
+            }
+            
+            #profile .btn-home {
+                display: inline-block;
+                padding: 12px 40px;
+                background: #6c757d;
+                color: white;
+                font-size: 16px;
+                font-weight: 600;
+                border: none;
+                border-radius: 30px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                text-decoration: none;
+            }
+            
+            #profile .btn-home:hover {
+                background: #5a6268;
+                color: white;
+                text-decoration: none;
+            }
+            
+            .alert {
+                border-radius: 30px;
+                padding: 12px 20px;
+                margin-bottom: 20px;
+            }
+            
+            .alert-success {
+                background: #d4edda;
+                border-color: #c3e6cb;
+                color: #155724;
+            }
+            
+            .alert-danger {
+                background: #f8d7da;
+                border-color: #f5c6cb;
+                color: #721c24;
+            }
+            
+            .alert-info {
+                background: #d1ecf1;
+                border-color: #bee5eb;
+                color: #0c5460;
+            }
+            
+            .profile-stats {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 20px;
+                margin-bottom: 30px;
+            }
+            
+            .profile-stats .stat-card {
+                background: #f8f9fa;
+                padding: 20px;
+                border-radius: 15px;
+                text-align: center;
+            }
+            
+            .profile-stats .stat-card .stat-number {
+                font-size: 28px;
+                font-weight: 700;
+                color: #00CED1;
+            }
+            
+            .profile-stats .stat-card .stat-label {
+                font-size: 14px;
+                color: #666;
+                margin-top: 5px;
+            }
+            
+            .section-divider {
+                margin: 30px 0;
+                border-top: 2px solid #f0f0f0;
+            }
+            
+            .action-buttons {
+                display: flex;
+                gap: 15px;
+                flex-wrap: wrap;
+                margin-top: 20px;
+            }
+            
+            @media (max-width: 767.98px) {
+                #profile .profile-box {
+                    padding: 30px 20px;
+                }
+                
+                #profile .profile-header {
+                    flex-direction: column;
+                    text-align: center;
+                }
+                
+                #profile .profile-header h2 {
+                    font-size: 28px;
+                    margin-bottom: 10px;
+                }
+                
+                .profile-stats {
+                    grid-template-columns: 1fr 1fr;
+                }
+                
+                .action-buttons {
+                    justify-content: center;
+                }
+            }
+            
+            @media (max-width: 575.98px) {
+                .profile-stats {
+                    grid-template-columns: 1fr;
+                }
+            }
+        </style>
+    </head>
+    
+    <body>
+        <!-- Header Section Start -->
+        <header id="header">
+            <a href="{{ url_for('index') }}" class="logo"><img src="{{ url_for('static', filename='img/logo.png') }}" alt="logo"></a>
+            <div class="phone"><i class="fa fa-phone"></i>+234 906 482 3328</div>
+            <div class="mobile-menu-btn"><i class="fa fa-bars"></i></div>
+            <nav class="main-menu top-menu">
+                <ul>
+                    <li><a href="{{ url_for('index') }}">Home</a></li>
+                    <li><a href="{{ url_for('about') }}">About Us</a></li>
+                    <li class="active"><a href="{{ url_for('profile') }}">My Profile</a></li>
+                    <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                    <li><a href="{{ url_for('contact') }}">Contact Us</a></li>
+                </ul>
+            </nav>
+        </header>
+        <!-- Header Section End -->
+        
+        <!-- Profile Section Start -->
+        <div id="profile">
+            <div class="container">
+                <div class="profile-box">
+                    <!-- Profile Header -->
+                    <div class="profile-header">
+                        <h2><i class="fa fa-user-circle" style="color: #00CED1;"></i> My Profile</h2>
+                        <span class="user-badge">
+                            <i class="fa fa-check-circle"></i> Verified Member
+                        </span>
+                    </div>
+                    
+                    <!-- Flash Messages -->
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                            {% for category, message in messages %}
+                                <div class="alert alert-{{ category }} alert-dismissible fade show">
+                                    <i class="fa fa-{% if category == 'success' %}check-circle{% elif category == 'info' %}info-circle{% else %}exclamation-circle{% endif %}"></i>
+                                    {{ message }}
+                                    <button type="button" class="close" data-dismiss="alert">
+                                        <span>&times;</span>
+                                    </button>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+                    
+                    <!-- Profile Avatar -->
+                    <div class="profile-avatar">
+                        <div class="avatar-circle">
+                            {{ user.first_name[0] }}{{ user.last_name[0] }}
+                        </div>
+                    </div>
+                    
+                    <!-- Profile Statistics -->
+                    <div class="profile-stats">
+                        <div class="stat-card">
+                            <div class="stat-number">1</div>
+                            <div class="stat-label">Total Bookings</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">0</div>
+                            <div class="stat-label">Active Bookings</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">100%</div>
+                            <div class="stat-label">Profile Complete</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Update Profile Form -->
+                    <form method="POST" action="{{ url_for('update_profile') }}">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="username">Username</label>
+                                    <input type="text" class="form-control" id="username" 
+                                           value="{{ user.username }}" disabled>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="created_at">Member Since</label>
+                                    <input type="text" class="form-control" id="created_at" 
+                                           value="{{ user.created_at.strftime('%B %d, %Y') if user.created_at else 'N/A' }}" disabled>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="fname">First Name *</label>
+                                    <input type="text" class="form-control" id="fname" name="fname" 
+                                           value="{{ user.first_name }}" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="lname">Last Name *</label>
+                                    <input type="text" class="form-control" id="lname" name="lname" 
+                                           value="{{ user.last_name }}" required>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email Address *</label>
+                            <input type="email" class="form-control" id="email" name="email" 
+                                   value="{{ user.email }}" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="mobile">Phone Number</label>
+                            <input type="text" class="form-control" id="mobile" name="mobile" 
+                                   value="{{ user.phone or '' }}" placeholder="Enter your phone number">
+                        </div>
+                        
+                        <button type="submit" class="btn-update">
+                            <i class="fa fa-save"></i> Update Profile
+                        </button>
+                    </form>
+                    
+                    <!-- Change Password Section -->
+                    <div class="section-divider"></div>
+                    
+                    <h4><i class="fa fa-key" style="color: #00CED1;"></i> Change Password</h4>
+                    <form method="POST" action="{{ url_for('change_password') }}">
+                        <div class="form-group">
+                            <label for="old_password">Current Password</label>
+                            <input type="password" class="form-control" id="old_password" 
+                                   name="old_password" placeholder="Enter current password" required>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="new_password">New Password</label>
+                                    <input type="password" class="form-control" id="new_password" 
+                                           name="new_password" placeholder="Enter new password" 
+                                           required minlength="6">
+                                    <small class="text-muted">Password must be at least 6 characters</small>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="confirm_password">Confirm New Password</label>
+                                    <input type="password" class="form-control" id="confirm_password" 
+                                           name="confirm_password" placeholder="Confirm new password" required>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn-update btn-danger">
+                            <i class="fa fa-exchange"></i> Change Password
+                        </button>
+                    </form>
+                    
+                    <!-- Action Buttons -->
+                    <div class="section-divider"></div>
+                    <div class="action-buttons">
+                        <a href="{{ url_for('index') }}" class="btn-home">
+                            <i class="fa fa-home"></i> Back to Home
+                        </a>
+                        <a href="{{ url_for('logout') }}" class="btn-update btn-danger" 
+                           onclick="return confirm('Are you sure you want to logout?')">
+                            <i class="fa fa-sign-out"></i> Logout
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Profile Section End -->
+        
+        <!-- Footer Section Start -->
+        <div id="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="social">
+                            <a href=""><li class="fa fa-instagram"></li></a>
+                            <a href=""><li class="fa fa-twitter"></li></a>
+                            <a href=""><li class="fa fa-facebook-f"></li></a>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <ul>
+                            <li><a href="{{ url_for('index') }}">Home</a></li>
+                            <li><a href="{{ url_for('about') }}">About</a></li>
+                            <li><a href="#">Terms</a></li>
+                            <li><a href="{{ url_for('contact') }}">Contact</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-12">
+                        <p>Copyright &#169; <a href="">HTML Codex</a> All Rights Reserved.</p>
+                        <p>Project Designed By <a href="">Abdulhamid Ibrahim</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer Section End -->
+        
+        <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+        
+        <!-- Vendor JavaScript -->
+        <script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+        
+        <script>
+            // Mobile menu toggle
+            $('.mobile-menu-btn').on('click', function() {
+                $('.main-menu').slideToggle();
+            });
+            
+            // Password confirmation validation
+            $('#confirm_password').on('keyup', function() {
+                var password = $('#new_password').val();
+                var confirm = $(this).val();
+                
+                if (confirm.length > 0) {
+                    if (password === confirm) {
+                        $(this).css('border-color', '#28a745');
+                    } else {
+                        $(this).css('border-color', '#dc3545');
+                    }
+                } else {
+                    $(this).css('border-color', '');
+                }
+            });
+            
+            // Form validation for password change
+            $('form[action="{{ url_for("change_password") }}"]').on('submit', function(e) {
+                var password = $('#new_password').val();
+                var confirm = $('#confirm_password').val();
+                
+                if (password !== confirm) {
+                    e.preventDefault();
+                    alert('Passwords do not match!');
+                    $('#confirm_password').focus();
+                    return false;
+                }
+                
+                if (password.length < 6) {
+                    e.preventDefault();
+                    alert('Password must be at least 6 characters long!');
+                    $('#new_password').focus();
+                    return false;
+                }
+            });
+        </script>
+    </body>
+</html>

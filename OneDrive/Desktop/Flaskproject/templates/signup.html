@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Sign Up | LOFT CITY</title>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <meta content="" name="keywords">
+        <meta content="" name="description">
+
+        <!-- Favicons -->
+        <link href="{{ url_for('static', filename='img/favicon.ico') }}" rel="icon">
+        <link href="{{ url_for('static', filename='img/apple-favicon.png') }}" rel="apple-touch-icon">
+
+        <!-- Google Fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,700|Raleway:100,200,300,400,500,600,700,800,900" rel="stylesheet"> 
+
+        <!-- Vendor CSS File -->
+        <link href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+        <link href="{{ url_for('static', filename='vendor/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
+        <link href="{{ url_for('static', filename='vendor/slick/slick.css') }}" rel="stylesheet">
+        <link href="{{ url_for('static', filename='vendor/slick/slick-theme.css') }}" rel="stylesheet">
+        <link href="{{ url_for('static', filename='vendor/tempusdominus/css/tempusdominus-bootstrap-4.min.css') }}" rel="stylesheet" />
+
+        <!-- Main Stylesheet File -->
+        <link href="{{ url_for('static', filename='css/hover-style.css') }}" rel="stylesheet">
+        <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+        
+        <style>
+            /* Additional styles for signup page */
+            #signup {
+                padding: 60px 0 80px 0;
+                background: #f2f2f2;
+                min-height: calc(100vh - 200px);
+            }
+            
+            #signup .container {
+                max-width: 700px;
+            }
+            
+            #signup .signup-box {
+                background: #ffffff;
+                padding: 40px 50px;
+                border-radius: 30px;
+                box-shadow: 0 5px 30px rgba(0,0,0,0.1);
+            }
+            
+            #signup .signup-box h2 {
+                font-family: 'Roboto Slab', serif;
+                font-size: 36px;
+                font-weight: 700;
+                color: #222;
+                margin-bottom: 5px;
+            }
+            
+            #signup .signup-box .subtitle {
+                color: #666;
+                font-size: 16px;
+                margin-bottom: 30px;
+            }
+            
+            #signup .form-group {
+                margin-bottom: 20px;
+            }
+            
+            #signup label {
+                font-size: 14px;
+                font-weight: 600;
+                color: #222;
+                margin-bottom: 5px;
+            }
+            
+            #signup label .required {
+                color: #dc3545;
+                margin-left: 2px;
+            }
+            
+            #signup .form-control {
+                height: 45px;
+                border: 1px solid #ddd;
+                border-radius: 30px;
+                padding: 5px 20px;
+                font-size: 14px;
+                transition: all 0.3s ease;
+            }
+            
+            #signup .form-control:focus {
+                border-color: #00CED1;
+                box-shadow: 0 0 0 3px rgba(0, 206, 209, 0.1);
+            }
+            
+            #signup .form-control.is-invalid {
+                border-color: #dc3545;
+            }
+            
+            #signup .form-control.is-valid {
+                border-color: #28a745;
+            }
+            
+            #signup .invalid-feedback {
+                display: block;
+                font-size: 13px;
+                color: #dc3545;
+                margin-top: 5px;
+            }
+            
+            #signup .valid-feedback {
+                display: block;
+                font-size: 13px;
+                color: #28a745;
+                margin-top: 5px;
+            }
+            
+            #signup .btn-signup {
+                display: inline-block;
+                padding: 12px 50px;
+                background: #222222;
+                color: #00CED1;
+                font-size: 18px;
+                font-weight: 600;
+                border: none;
+                border-radius: 30px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                width: 100%;
+                margin-top: 10px;
+            }
+            
+            #signup .btn-signup:hover {
+                background: #00CED1;
+                color: #222222;
+            }
+            
+            #signup .login-link {
+                text-align: center;
+                margin-top: 20px;
+                font-size: 15px;
+            }
+            
+            #signup .login-link a {
+                color: #00CED1;
+                font-weight: 600;
+            }
+            
+            #signup .login-link a:hover {
+                color: #222;
+                text-decoration: none;
+            }
+            
+            #signup .divider {
+                text-align: center;
+                margin: 25px 0;
+                position: relative;
+            }
+            
+            #signup .divider span {
+                background: #fff;
+                padding: 0 15px;
+                color: #999;
+                font-size: 14px;
+            }
+            
+            #signup .divider::before {
+                content: '';
+                position: absolute;
+                left: 0;
+                top: 50%;
+                width: 100%;
+                height: 1px;
+                background: #ddd;
+                z-index: 0;
+            }
+            
+            .alert {
+                border-radius: 30px;
+                padding: 12px 20px;
+                margin-bottom: 20px;
+            }
+            
+            .alert-success {
+                background: #d4edda;
+                border-color: #c3e6cb;
+                color: #155724;
+            }
+            
+            .alert-danger {
+                background: #f8d7da;
+                border-color: #f5c6cb;
+                color: #721c24;
+            }
+            
+            .alert i {
+                margin-right: 10px;
+            }
+            
+            .password-hint {
+                font-size: 12px;
+                color: #999;
+                margin-top: 5px;
+                display: block;
+            }
+            
+            .password-requirements {
+                list-style: none;
+                padding: 0;
+                margin: 5px 0 0 0;
+                font-size: 12px;
+            }
+            
+            .password-requirements li {
+                padding: 2px 0;
+                color: #999;
+            }
+            
+            .password-requirements li.valid {
+                color: #28a745;
+            }
+            
+            .password-requirements li.invalid {
+                color: #dc3545;
+            }
+            
+            .password-requirements li i {
+                margin-right: 5px;
+                width: 14px;
+            }
+            
+            .password-strength {
+                height: 3px;
+                margin-top: 8px;
+                border-radius: 3px;
+                transition: all 0.3s ease;
+                background: #ddd;
+            }
+            
+            .password-strength.weak {
+                background: #dc3545;
+                width: 33%;
+            }
+            
+            .password-strength.medium {
+                background: #ffc107;
+                width: 66%;
+            }
+            
+            .password-strength.strong {
+                background: #28a745;
+                width: 100%;
+            }
+            
+            .username-availability {
+                font-size: 13px;
+                margin-top: 5px;
+            }
+            
+            @media (max-width: 767.98px) {
+                #signup .signup-box {
+                    padding: 30px 20px;
+                }
+                
+                #signup .signup-box h2 {
+                    font-size: 28px;
+                }
+            }
+            
+            @media (max-width: 575.98px) {
+                #signup .signup-box {
+                    padding: 20px 15px;
+                }
+                
+                #signup .signup-box h2 {
+                    font-size: 24px;
+                }
+            }
+        </style>
+    </head>
+
+    <body>
+        <!-- Header Section Start -->
+        <header id="header">
+            <a href="{{ url_for('index') }}" class="logo"><img src="{{ url_for('static', filename='img/logo.png') }}" alt="logo"></a>
+            <div class="phone"><i class="fa fa-phone"></i>+234 906 482 3328</div>
+            <div class="mobile-menu-btn"><i class="fa fa-bars"></i></div>
+            <nav class="main-menu top-menu">
+                <ul>
+                    <li><a href="{{ url_for('index') }}">Home</a></li>
+                    <li class="active"><a href="{{ url_for('signup') }}">Sign Up</a></li>
+                    <li><a href="{{ url_for('about') }}">About Us</a></li>
+                    <li><a href="{{ url_for('login') }}">Login</a></li>
+                    <li><a href="{{ url_for('contact') }}">Contact Us</a></li>
+                </ul>
+            </nav>
+        </header>
+        <!-- Header Section End -->
+
+        <!-- Signup Section Start -->
+        <div id="signup">
+            <div class="container">
+                <div class="signup-box">
+                    <h2>Create Account</h2>
+                    <p class="subtitle">Join us and start booking your dream apartment</p>
+                    
+                    <!-- Flash Messages -->
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                            {% for category, message in messages %}
+                                <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                                    <i class="fa fa-{% if category == 'success' %}check-circle{% else %}exclamation-circle{% endif %}"></i>
+                                    {{ message }}
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+                    
+                    <form method="POST" action="{{ url_for('signup') }}" id="signupForm" novalidate>
+                        <!-- Username Field -->
+                        <div class="form-group">
+                            <label for="username">Username <span class="required">*</span></label>
+                            <input type="text" class="form-control" id="username" name="username" 
+                                   placeholder="Choose a username (letters, numbers, underscores)" 
+                                   value="{{ username if username else '' }}"
+                                   required minlength="3" maxlength="20" pattern="[a-zA-Z0-9_]+">
+                            <div class="username-availability" id="usernameFeedback"></div>
+                            <small class="text-muted">3-20 characters, letters, numbers, and underscores only</small>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="fname">First Name <span class="required">*</span></label>
+                                    <input type="text" class="form-control" id="fname" name="fname" 
+                                           placeholder="Enter first name" 
+                                           value="{{ fname if fname else '' }}"
+                                           required minlength="2">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="lname">Last Name <span class="required">*</span></label>
+                                    <input type="text" class="form-control" id="lname" name="lname" 
+                                           placeholder="Enter last name"
+                                           value="{{ lname if lname else '' }}"
+                                           required minlength="2">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email Address <span class="required">*</span></label>
+                            <input type="email" class="form-control" id="email" name="email" 
+                                   placeholder="Enter email address"
+                                   value="{{ email if email else '' }}"
+                                   required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="mobile">Phone Number</label>
+                            <input type="tel" class="form-control" id="mobile" name="mobile" 
+                                   placeholder="Enter phone number (optional)"
+                                   value="{{ mobile if mobile else '' }}">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="password">Password <span class="required">*</span></label>
+                            <input type="password" class="form-control" id="password" name="password" 
+                                   placeholder="Create a strong password" required minlength="6">
+                            <div class="password-strength" id="passwordStrength"></div>
+                            <ul class="password-requirements" id="passwordRequirements">
+                                <li id="reqLength"><i class="fa fa-circle"></i> At least 6 characters</li>
+                                <li id="reqUppercase"><i class="fa fa-circle"></i> At least one uppercase letter</li>
+                                <li id="reqLowercase"><i class="fa fa-circle"></i> At least one lowercase letter</li>
+                                <li id="reqNumber"><i class="fa fa-circle"></i> At least one number</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="confirm_password">Confirm Password <span class="required">*</span></label>
+                            <input type="password" class="form-control" id="confirm_password" name="confirm_password" 
+                                   placeholder="Confirm your password" required>
+                            <span class="password-hint" id="passwordMatch"></span>
+                        </div>
+                        
+                        <button type="submit" class="btn-signup">Create Account</button>
+                    </form>
+                    
+                    <div class="divider">
+                        <span>Already have an account?</span>
+                    </div>
+                    
+                    <div class="login-link">
+                        <a href="{{ url_for('login') }}">Login Here</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Signup Section End -->
+
+        <!-- Footer Section Start -->
+        <div id="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="social">
+                            <a href=""><li class="fa fa-instagram"></li></a>
+                            <a href=""><li class="fa fa-twitter"></li></a>
+                            <a href=""><li class="fa fa-facebook-f"></li></a>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <ul>
+                            <li><a href="{{ url_for('index') }}">Home</a></li>
+                            <li><a href="{{ url_for('about') }}">About</a></li>
+                            <li><a href="#">Terms</a></li>
+                            <li><a href="{{ url_for('contact') }}">Contact</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-12">
+                        <p>Copyright &#169; <a href="">HTML Codex</a> All Rights Reserved.</p>
+                        <p>Project Designed By <a href="">Abdulhamid Ibrahim</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer Section End -->
+
+        <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+
+        <!-- Vendor JavaScript File -->
+        <script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='vendor/jquery/jquery-migrate.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='vendor/easing/easing.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='vendor/stickyjs/sticky.js') }}"></script>
+        <script src="{{ url_for('static', filename='vendor/superfish/hoverIntent.js') }}"></script>
+        <script src="{{ url_for('static', filename='vendor/superfish/superfish.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='vendor/wow/wow.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='vendor/slick/slick.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='vendor/tempusdominus/js/moment.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='vendor/tempusdominus/js/moment-timezone.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='vendor/tempusdominus/js/tempusdominus-bootstrap-4.min.js') }}"></script>
+
+        <!-- Main Javascript File -->
+        <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+        
+        <script>
+            $(document).ready(function() {
+                // Username validation
+                $('#username').on('keyup', function() {
+                    var username = $(this).val();
+                    var feedback = $('#usernameFeedback');
+                    
+                    if (username.length === 0) {
+                        feedback.html('');
+                        return;
+                    }
+                    
+                    if (username.length < 3) {
+                        feedback.html('<span style="color: #dc3545;"><i class="fa fa-times-circle"></i> Username must be at least 3 characters</span>');
+                    } else if (username.length > 20) {
+                        feedback.html('<span style="color: #dc3545;"><i class="fa fa-times-circle"></i> Username must be less than 20 characters</span>');
+                    } else if (!/^[a-zA-Z0-9_]+$/.test(username)) {
+                        feedback.html('<span style="color: #dc3545;"><i class="fa fa-times-circle"></i> Only letters, numbers, and underscores allowed</span>');
+                    } else {
+                        feedback.html('<span style="color: #28a745;"><i class="fa fa-check-circle"></i> Username is available</span>');
+                    }
+                });
+                
+                // Password strength and requirements
+                $('#password').on('keyup', function() {
+                    var password = $(this).val();
+                    var strength = $('#passwordStrength');
+                    
+                    // Check requirements
+                    var hasLength = password.length >= 6;
+                    var hasUppercase = /[A-Z]/.test(password);
+                    var hasLowercase = /[a-z]/.test(password);
+                    var hasNumber = /[0-9]/.test(password);
+                    
+                    // Update requirement indicators
+                    updateRequirement('#reqLength', hasLength);
+                    updateRequirement('#reqUppercase', hasUppercase);
+                    updateRequirement('#reqLowercase', hasLowercase);
+                    updateRequirement('#reqNumber', hasNumber);
+                    
+                    // Update strength meter
+                    if (password.length === 0) {
+                        strength.removeClass('weak medium strong');
+                        return;
+                    }
+                    
+                    var score = 0;
+                    if (hasLength) score++;
+                    if (hasUppercase) score++;
+                    if (hasLowercase) score++;
+                    if (hasNumber) score++;
+                    
+                    strength.removeClass('weak medium strong');
+                    if (score <= 2) {
+                        strength.addClass('weak');
+                    } else if (score === 3) {
+                        strength.addClass('medium');
+                    } else {
+                        strength.addClass('strong');
+                    }
+                });
+                
+                function updateRequirement(id, isValid) {
+                    var element = $(id);
+                    var icon = element.find('i');
+                    if (isValid) {
+                        element.removeClass('invalid').addClass('valid');
+                        icon.removeClass('fa-circle').addClass('fa-check-circle');
+                    } else {
+                        element.removeClass('valid').addClass('invalid');
+                        icon.removeClass('fa-check-circle').addClass('fa-circle');
+                    }
+                }
+                
+                // Password match validation
+                $('#confirm_password').on('keyup', function() {
+                    var password = $('#password').val();
+                    var confirm = $(this).val();
+                    var match = $('#passwordMatch');
+                    
+                    if (confirm.length === 0) {
+                        match.text('');
+                        $(this).removeClass('is-valid is-invalid');
+                        return;
+                    }
+                    
+                    if (password === confirm) {
+                        match.text('✓ Passwords match');
+                        match.css('color', '#28a745');
+                        $(this).removeClass('is-invalid').addClass('is-valid');
+                    } else {
+                        match.text('✗ Passwords do not match');
+                        match.css('color', '#dc3545');
+                        $(this).removeClass('is-valid').addClass('is-invalid');
+                    }
+                });
+                
+                // Form validation on submit
+                $('#signupForm').on('submit', function(e) {
+                    var isValid = true;
+                    var errorMessages = [];
+                    
+                    // Validate username
+                    var username = $('#username').val().trim();
+                    if (!username) {
+                        errorMessages.push('Username is required');
+                        isValid = false;
+                    } else if (username.length < 3) {
+                        errorMessages.push('Username must be at least 3 characters');
+                        isValid = false;
+                    } else if (!/^[a-zA-Z0-9_]+$/.test(username)) {
+                        errorMessages.push('Username can only contain letters, numbers, and underscores');
+                        isValid = false;
+                    }
+                    
+                    // Validate first name
+                    var fname = $('#fname').val().trim();
+                    if (!fname) {
+                        errorMessages.push('First name is required');
+                        isValid = false;
+                    }
+                    
+                    // Validate last name
+                    var lname = $('#lname').val().trim();
+                    if (!lname) {
+                        errorMessages.push('Last name is required');
+                        isValid = false;
+                    }
+                    
+                    // Validate email
+                    var email = $('#email').val().trim();
+                    if (!email) {
+                        errorMessages.push('Email address is required');
+                        isValid = false;
+                    } else if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)) {
+                        errorMessages.push('Please enter a valid email address');
+                        isValid = false;
+                    }
+                    
+                    // Validate password
+                    var password = $('#password').val();
+                    if (!password) {
+                        errorMessages.push('Password is required');
+                        isValid = false;
+                    } else if (password.length < 6) {
+                        errorMessages.push('Password must be at least 6 characters');
+                        isValid = false;
+                    } else if (!/[A-Z]/.test(password)) {
+                        errorMessages.push('Password must contain at least one uppercase letter');
+                        isValid = false;
+                    } else if (!/[a-z]/.test(password)) {
+                        errorMessages.push('Password must contain at least one lowercase letter');
+                        isValid = false;
+                    } else if (!/[0-9]/.test(password)) {
+                        errorMessages.push('Password must contain at least one number');
+                        isValid = false;
+                    }
+                    
+                    // Validate password confirmation
+                    if (password !== $('#confirm_password').val()) {
+                        errorMessages.push('Passwords do not match');
+                        isValid = false;
+                    }
+                    
+                    if (!isValid) {
+                        e.preventDefault();
+                        alert(errorMessages.join('\n'));
+                        return false;
+                    }
+                });
+                
+                // Mobile menu toggle
+                $('.mobile-menu-btn').on('click', function() {
+                    $('.main-menu').slideToggle();
+                });
+            });
+        </script>
+    </body>
+</html>
